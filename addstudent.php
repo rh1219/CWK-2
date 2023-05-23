@@ -96,19 +96,22 @@
             }
         }
 
-        // If there are no errors, insert student details into the database
+// If there are no errors, insert student details into the database
         if (empty($nameErr) && empty($ageErr) && empty($emailErr) && empty($passwordErr) && empty($imageErr)) {
-            // Database configuration
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "students";
+            // ...
 
             // Create a connection to the database
             $conn = new mysqli($servername, $username, $password, $dbname);
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
+
+            // Sanitise the input before inserting into the database
+            $name = mysqli_real_escape_string($conn, $name);
+            $age = mysqli_real_escape_string($conn, $age);
+            $email = mysqli_real_escape_string($conn, $email);
+            $hashedPassword = mysqli_real_escape_string($conn, $hashedPassword);
+            $image = mysqli_real_escape_string($conn, $image);
 
             // Execute the SQL statement to insert details
             $stmt = $conn->prepare("INSERT INTO students (name, age, email, password, image) VALUES (?, ?, ?, ?, ?)");

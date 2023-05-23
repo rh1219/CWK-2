@@ -17,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         }
 
+        // Escape and sanitize the selected students
+        $escapedSelectedStudents = array_map(function ($studentId) use ($conn) {
+            return mysqli_real_escape_string($conn, $studentId);
+        }, $selectedStudents);
 
         $selectedStudentsString = implode(",", $selectedStudents);
 
