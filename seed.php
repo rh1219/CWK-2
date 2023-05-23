@@ -34,9 +34,9 @@ $students = [
 ];
 
 foreach ($students as $student) {
-    $name = $student[0];
-    $age = $student[1];
-    $email = $student[2];
+    $name = mysqli_real_escape_string($conn, $student[0]);
+    $age = (int)$student[1];
+    $email = mysqli_real_escape_string($conn, $student[2]);
 
     // Prepare and execute the SQL query
     $sql = "INSERT INTO students (name, age, email) VALUES ('$name', $age, '$email')";

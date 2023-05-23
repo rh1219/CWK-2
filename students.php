@@ -53,7 +53,9 @@
 
             // Retrieve student records
             $sql = "SELECT * FROM students";
-            $result = $conn->query($sql);
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 // Output data of each row
